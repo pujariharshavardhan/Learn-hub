@@ -28,6 +28,9 @@ After finishing the sign-up and login pages, we started working on the student d
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/9.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/10.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/11.png)
+
+we created the Campus Bridge Chatbot by designing a chat area where users can ask questions, adding suggested questions like "What are the LMS features?" and "How do I track my progress?" with a "Send" button to start chatting.
+
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/12.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/13.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/14.png)
