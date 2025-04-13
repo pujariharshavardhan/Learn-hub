@@ -16,6 +16,7 @@ We started by thinking about what we wanted the website to do. We decided it sho
 
 After planning the website to assist students and teachers, we created sign-up pages for students and admins with clean forms for name, email,adding gender and terms options for students, a tree and pathway background for a welcoming feel, and a similar design for the admin login. We saved new sign-ups in a database and validated login details against it, redirecting users to their respective dashboards if correct. We then tested all features, including the quiz, chatbot, and login forms, ensuring the database worked and redirects functioned.
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/3.png)
+![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/tutorials.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/4.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/5.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/6.png)
