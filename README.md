@@ -20,6 +20,9 @@ After planning the website to assist students and teachers, we created sign-up p
 After finishing the sign-up and login pages, we started working on the student dashboard, chatbot, and quiz sections to make the website more helpful. For the student dashboard, we planned a welcoming page with the LearnHub name, a "Get Started" button, and a nice picture of someone working, adding a simple menu with options like Home, About Us, Quiz, Details, and Contact Us.
 
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/4.png)
+
+we created the "Our Courses" section on the LearnHub website to help students explore different subjects. We designed a clean page with a blue header featuring the LearnHub logo, a navigation menu with Home, About Us, Quiz, Details, and Contact Us, and a bright "Get Started" button. We added course blocks for Web Development, Java, Python and C. Each with colorful icons and names, and included a "Read More" button for students interested in learning more. We also added a special feature where, when the cursor moves over a block, a white box pops up showing the topics inside, like HTML & CSS, JavaScript
+
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/5.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/474eb471d721217924b50868480641af2dd674c8/images/tutorials.png)
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/6.png)
