@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Auth</title>
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="auth-card p-4 p-md-5 rounded-3 shadow-lg animate__animated animate__fadeIn">
+            <h2 class="text-center mb-4 text-primary">
+                <i class="fas fa-user-circle me-2"></i> Admin Portal
+            </h2>
+
+            <!-- Tabs -->
+            <ul class="nav nav-pills nav-justified mb-4" id="authTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="register-tab" data-bs-toggle="pill" href="#register" role="tab">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="login-tab" data-bs-toggle="pill" href="#login" role="tab">Login</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Register Form -->
+                <div class="tab-pane fade show active" id="register" role="tabpanel">
+                    <form  action="connect1.php" method="post">
+                        <div class="form-floating mb-3">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <label for="email">Email</label>
+                            <input type="email"class="form-control" id="email" name="email" required>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <button type="submit"class="btn btn-primary btn-block w-100">Register</button>
+                    </form>
+                </div>
+
+                <!-- Login Form -->
+                <div class="tab-pane fade" id="login" role="tabpanel">
+                    <form id="loginForm" novalidate>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nameLogin" name="name" placeholder="Name" required>
+                            <label for="name"><i class="fas fa-user me-2"></i>Email</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="emailLogin" name="email" placeholder="Email" required>
+                            <label for="emailLogin"><i class="fas fa-envelope me-2"></i>Password</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <a href="#" class="forget-password">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block w-100"><a href="./admin.html" style="text-decoration: none; color: #fff;">Login</a</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <!-- Custom JS -->
+    <script src="signin.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - LearnHub</title>
+    <link rel="stylesheet" href="Report.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+</head>
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+        <select id="student-select">
+            <!-- Options populated dynamically -->
+        </select>
+    </header>
+    <main>
+        <section id="student-info" class="card">
+            <h2>Student Information</h2>
+            <div id="student-details"></div>
+        </section>
+
+        <section id="course-details" class="card">
+            <h2>Course Details</h2>
+            <div id="course-list"></div>
+            <canvas id="progress-chart"></canvas>
+        </section>
+
+        <section id="assessment-results" class="card">
+            <h2>Assessment Results</h2>
+            <div id="assessment-list"></div>
+            <canvas id="scores-chart"></canvas>
+        </section>
+
+        <section id="learning-activity" class="card">
+            <h2>Learning Activity</h2>
+            <div id="activity-list"></div>
+            <canvas id="activity-chart"></canvas>
+        </section>
+
+        <section id="skill-mastery" class="card">
+            <h2>Skill Mastery</h2>
+            <div id="skill-list"></div>
+        </section>
+
+        <section id="attendance" class="card">
+            <h2>Attendance / Login Activity</h2>
+            <div id="attendance-details"></div>
+            <canvas id="login-chart"></canvas>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="Report.js"></script>
+</body>
+</html>

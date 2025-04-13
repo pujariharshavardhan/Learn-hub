@@ -1,0 +1,393 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #3182ce, #a78bfa);
+    color: #2d3748;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    position: relative;
+    z-index: 10;
+    height: 60px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-in-out;
+}
+
+header a {
+    color:#fff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+header a:hover {
+    background: #ff4040;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 300px;
+    background: #fff;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
+}
+
+.sidebar-btn {
+    width: 100%;
+    height: 80px;
+    border: none;
+    border-radius: 0;
+    background: #008080;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: left;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar-btn:last-child {
+    border-bottom: none;
+}
+
+.sidebar-btn:hover {
+    background: #006666;
+}
+
+.sidebar-btn.active {
+    background: #ff6f61;
+}
+
+.sidebar-btn i {
+    margin-right: 0.8rem;
+}
+
+.content {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    width: 800px;
+    height: 800px;
+    animation: slideUp 0.8s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card.hidden {
+    display: none;
+}
+
+.card h2 {
+    font-size: 2rem;
+    color: #008080;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.settings-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.settings-content label {
+    display:flexbox;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin: 0.5rem 0;
+}
+
+.settings-content input,
+.settings-content textarea {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    background: #e9ecef;
+}
+
+.settings-content input:disabled,
+.settings-content textarea:disabled {
+    background: #e9ecef;
+}
+
+.settings-content button {
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s;
+}
+
+#save-password-btn,
+#save-linked-btn,
+#save-notif-btn {
+    background: #008080;
+    color: #fff;
+}
+
+#save-password-btn:hover,
+#save-linked-btn:hover,
+#save-notif-btn:hover {
+    background: #006666;
+}
+
+#cancel-linked-btn,
+#cancel-support-btn,
+#cancel-delete-btn {
+    background: #ccc;
+    color: #2d3748;
+}
+
+#cancel-linked-btn:hover,
+#cancel-support-btn:hover,
+#cancel-delete-btn:hover {
+    background: #bbb;
+}
+
+#confirm-terms-btn {
+    background: #008080;
+    color: #fff;
+}
+
+#confirm-terms-btn:hover {
+    background: #006666;
+}
+
+#accept-privacy-btn {
+    background: #008080;
+    color: #fff;
+}
+
+#accept-privacy-btn:hover {
+    background: #006666;
+}
+
+#send-support-btn {
+    background: #ff4040;
+    color: #fff;
+}
+
+#send-support-btn:hover {
+    background: #cc0000;
+}
+
+#delete-account-btn {
+    background: #ff4040;
+    color: #fff;
+}
+
+#delete-account-btn:hover {
+    background: #cc0000;
+}
+
+#yes-delete-btn {
+    background: #ff4040;
+    color: #fff;
+}
+
+#yes-delete-btn:hover {
+    background: #cc0000;
+}
+
+#no-delete-btn {
+    background: #ccc;
+    color: #2d3748;
+}
+
+#no-delete-btn:hover {
+    background: #bbb;
+}
+
+#delete-confirmation {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#delete-confirmation.hidden {
+    display: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Terms and Conditions Checkbox Adjustment */
+#terms-check {
+    margin-right: 5px; /* 0.5cm = 5px */
+}
+
+.settings-content label[for="terms-check"] {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Ensure "I Agree" is close to checkbox */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 1080px) {
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0.5rem;
+        box-shadow: none;
+        height: auto;
+    }
+
+    .sidebar-btn {
+        width: 180px;
+        height: 60px;
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .card {
+        width: 90vw;
+        height: 90vh;
+        max-width: 800px;
+        max-height: 800px;
+        padding: 1.5rem;
+    }
+
+    .card h2 {
+        font-size: 1.6rem;
+    }
+
+    .settings-content label,
+    .settings-content p {
+        font-size: 1rem;
+    }
+
+    .settings-content input,
+    .settings-content textarea {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+
+    .settings-content button {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header a {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .sidebar-btn {
+        font-size: 0.8rem;
+        height: 50px;
+        width: 150px;
+    }
+
+    .card h2 {
+        font-size: 1.4rem;
+    }
+
+    .settings-content label,
+    .settings-content p {
+        font-size: 0.9rem;
+    }
+
+    .settings-content input,
+    .settings-content textarea {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .settings-content button {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

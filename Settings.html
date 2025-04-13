@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - LearnHub</title>
+    <link rel="stylesheet" href="./settings.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+</head>
+<body>
+    <header>
+        <h1>Settings - LearnHub</h1>
+        <a href="profile.html">Back to Profile</a>
+    </header>
+    <main>
+        <div class="sidebar">
+            <button id="change-password-btn" class="sidebar-btn active"><i class="fas fa-lock"></i> Change Password</button>
+            <button id="linked-accounts-btn" class="sidebar-btn"><i class="fab fa-google"></i> Linked Accounts</button>
+            <button id="notification-btn" class="sidebar-btn"><i class="fas fa-bell"></i> Notification Preferences</button>
+            <button id="terms-btn" class="sidebar-btn"><i class="fas fa-file-alt"></i> Terms and Conditions</button>
+            <button id="privacy-btn" class="sidebar-btn"><i class="fas fa-shield-alt"></i> Privacy Policy</button>
+            <button id="support-btn" class="sidebar-btn"><i class="fas fa-headset"></i> Contact Support/Feedback</button>
+            <button id="delete-btn" class="sidebar-btn"><i class="fas fa-trash"></i> Delete Account</button>
+        </div>
+        <div class="content">
+            <section id="change-password" class="card">
+                <h2>Change Password</h2>
+                <div class="settings-content">
+                    <label>Old Password: <input type="password" id="old-password" disabled></label>
+                    <label>New Password: <input type="password" id="new-password" disabled></label>
+                    <label>Confirm Password: <input type="password" id="confirm-password" disabled></label>
+                    <button id="save-password-btn">Save</button>
+                </div>
+            </section>
+            <section id="linked-accounts" class="card hidden">
+                <h2>Linked Accounts</h2>
+                <div class="settings-content">
+                    <button id="link-google-btn">Link Google</button>
+                    <button id="link-facebook-btn">Link Facebook</button>
+                    <div class="buttons">
+                        <button id="save-linked-btn">Save</button>
+                        <button id="cancel-linked-btn">Cancel</button>
+                    </div>
+                </div>
+            </section>
+            <section id="notification" class="card hidden">
+                <h2>Notification Preferences</h2>
+                <div class="settings-content">
+                    <label>Email: <input type="checkbox" id="email-notif" disabled></label>
+                    <label>SMS: <input type="checkbox" id="sms-notif" disabled></label>
+                    <label>Push: <input type="checkbox" id="push-notif" disabled></label>
+                    <button id="save-notif-btn">Save</button>
+                </div>
+            </section>
+            <section id="terms" class="card hidden">
+                <h2>Terms and Conditions</h2>
+                <div class="settings-content">
+                    <p>By checking this box, you agree to the Terms and Conditions of LearnHub.</p>
+                    <label><input type="checkbox" id="terms-check" disabled> I Agree</label>
+                    <button id="confirm-terms-btn">Confirm</button>
+                </div>
+            </section>
+            <section id="privacy" class="card hidden">
+                <h2>Privacy Policy</h2>
+                <div class="settings-content">
+                    <p>LearnHub is committed to protecting your privacy. Click Accept to agree.</p>
+                    <button id="accept-privacy-btn">Accept</button>
+                </div>
+            </section>
+            <section id="support" class="card hidden">
+                <h2>Contact Support/Feedback</h2>
+                <div class="settings-content">
+                    <p>Contact: support@learnhub.com | Phone: +91-123-456-7890</p>
+                    <label>Email: <input type="email" id="support-email" disabled></label>
+                    <label>Note: <textarea id="support-note" rows="4" disabled></textarea></label>
+                    <div class="buttons">
+                        <button id="send-support-btn">Send</button>
+                        <button id="cancel-support-btn">Cancel</button>
+                    </div>
+                </div>
+            </section>
+            <section id="delete" class="card hidden">
+                <h2>Delete Account</h2>
+                <div class="settings-content">
+                    <button id="delete-account-btn">Delete</button>
+                    <button id="cancel-delete-btn">Cancel</button>
+                    <div id="delete-confirmation" class="hidden">
+                        <p>Are you sure you want to delete your account?</p>
+                        <button id="yes-delete-btn"><a href="./index.html" style="text-decoration: none; color:#fff">Yes</a></button>
+                        <button id="no-delete-btn">No</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="./SEttings.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+/* Custom CSS for modern, attractive theme */
+body {  
+    background: linear-gradient(rgba(31, 30, 30, 0.5), rgba(31, 30, 30, 0.5)), url(./Screenshot\ 2025-04-12\ 124055.png);  
+    background-blend-mode: overlay;  
+    background-size: cover;  
+    background-position: center;  
+}  
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    max-width: 500px;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.auth-card:hover {
+    transform: translateY(-5px);
+}
+
+.text-primary {
+    color: #4b56d2 !important;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.form-floating > .form-control {
+    border: none;
+    border-radius: 10px;
+    background: #f1f5f9;
+    transition: all 0.3s ease;
+    padding-top: 1.625rem;
+}
+
+.form-floating > .form-control:focus {
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+    background: #ffffff;
+}
+
+.form-floating > label {
+    color: #6b7280;
+    padding-top: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-floating > label i {
+    transition: transform 0.2s ease;
+}
+
+.form-floating:focus-within > label i {
+    transform: scale(1.2);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #4b56d2, #7c3aed);
+    border: none;
+    border-radius: 50px;
+    padding: 12px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #7c3aed, #4b56d2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+}
+
+.nav-pills .nav-link {
+    background: #e2e8f0;
+    color: #1f2937;
+    border-radius: 50px;
+    margin: 0 5px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background: #c7d2fe;
+}
+
+.nav-pills .nav-link.active {
+    background: #4b56d2;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.invalid-feedback {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.forget-password {
+    color: #4b56d2;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.forget-password:hover {
+    color: #7c3aed;
+    text-decoration: underline;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.navbar-nav .nav-link {
+    color: #1f2937;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #4b56d2;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .nav-pills .nav-link {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+    .btn-primary {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .text-primary {
+        font-size: 1.5rem;
+    }
+
+    .form-floating > .form-control {
+        font-size: 0.9rem;
+    }
+
+    .form-floating > label {
+        font-size: 0.9rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-card {
+        max-width: 90%;
+    }
+}

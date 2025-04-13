@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - LearnHub</title>
+    <link rel="stylesheet" href="PROFILE.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+</head>
+<body>
+    <header>
+        <h1>Profile - LearnHub</h1>
+        <a href="New.html">Back to Dashboard</a>
+    </header>
+    <main>
+        <div class="dashboard">
+            <button id="info-btn" class="dash-btn active"><i class="fas fa-user"></i> Personal Info</button>
+            <button id="skills-btn" class="dash-btn"><i class="fas fa-star"></i> Skills</button>
+            <button id="hobbies-btn" class="dash-btn"><i class="fas fa-heart"></i> Hobbies</button>
+        </div>
+        <div class="content">
+            <section id="personal-info" class="card">
+                <h2>Personal Information</h2>
+                <div class="image-upload hidden">
+                    <img id="user-image" src="https://via.placeholder.com/100" alt="User Image">
+                    <input type="file" id="image-input" accept="image/*" disabled>
+                    <button id="remove-image-btn" class="hidden">Remove Image</button>
+                </div>
+                <div class="info-fields">
+                    <label><i class="fas fa-user" style="color: #ff4040;"></i> Name: <input id="name" value="" disabled></label>
+                    <label><i class="fas fa-id-badge" style="color: #ff4040;"></i> Roll Number: <input id="roll-number" value="" disabled></label>
+                    <label><i class="fas fa-phone" style="color: #ff4040;"></i> Mobile Number: <input id="mobile" type="tel" value="" disabled></label>
+                    <label><i class="fas fa-calendar" style="color: #ff4040;"></i> Date of Birth: <input id="dob" type="date" value="" disabled></label>
+                    <label><i class="fas fa-map-marker-alt" style="color: #ff4040;"></i> Place: <input id="place" value="" disabled></label>
+                    <label><i class="fas fa-mail-bulk" style="color: #ff4040;"></i> Pincode: <input id="pincode" type="number" value="" disabled></label>
+                </div>
+                <div class="buttons">
+                    <button id="edit-btn">Edit</button>
+                    <button id="save-btn" disabled>Save</button>
+                </div>
+            </section>
+            <section id="skills" class="card hidden">
+                <h2>Skills</h2>
+                <ul id="skills-list"></ul>
+            </section>
+            <section id="hobbies" class="card hidden">
+                <h2>Hobbies</h2>
+                <ul id="hobbies-list"></ul>
+            </section>
+        </div>
+    </main>
+    <script src="Profile.js"></script>
+</body>
+</html>

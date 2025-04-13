@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #ddd;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .tab.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .filters {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 8px;
+            border-radius: 5px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .metric-card.hidden {
+            display: none;
+        }
+        .chart-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .pie-chart-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        .pie-chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .student-name {
+            cursor: pointer;
+            color: #007bff;
+        }
+        .student-name:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Student Progress Analytics Dashboard</h1>
+
+        <!-- Filters -->
+        <div class="filters">
+            <select id="classFilter">
+                <option value="All">All Classes</option>
+                <option value="Class A">Class A</option>
+                <option value="Class B">Class B</option>
+            </select>
+            <select id="studentFilter">
+                <option value="All">All Students</option>
+            </select>
+            <select id="timePeriod">
+                <option value="30">Last 30 Days</option>
+                <option value="60">Last 60 Days</option>
+                <option value="90">Last 90 Days</option>
+            </select>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('studentTab')">Student-to-Student</div>
+            <div class="tab" onclick="showTab('classTab')">Class-to-Class</div>
+        </div>
+
+        <!-- Student Tab -->
+        <div id="studentTab">
+            <div class="metrics">
+                <div class="metric-card">
+                    <h3>Coding Score</h3>
+                    <p id="avgCodingScore">0%</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Academic Score</h3>
+                    <p id="avgAcademicScore">0%</p>
+                </div>
+                <div class="metric-card" id="totalProblemsCard">
+                    <h3>Total Problems Solved</h3>
+                    <p id="totalProblems">0</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="studentProgressChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="studentScatterChart"></canvas>
+            </div>
+
+            <h2>Student Progress</h2>
+            <table>
+                <thead id="studentTableHead"></thead>
+                <tbody id="studentTable"></tbody>
+            </table>
+        </div>
+
+        <!-- Class Tab -->
+        <div id="classTab" style="display: none;">
+            <div class="metrics">
+                <div class="metric-card">
+                    <h3>Avg Class Coding Score</h3>
+                    <p id="avgClassCodingScore">0%</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Avg Class Academic Score</h3>
+                    <p id="avgClassAcademicScore">0%</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Classes</h3>
+                    <p id="totalClasses">0</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="classProgressChart"></canvas>
+            </div>
+            <div class="pie-chart-container">
+                <canvas id="classPieChart"></canvas>
+            </div>
+
+            <h2>Class Progress Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Avg Coding Score</th>
+                        <th>Avg Academic Score</th>
+                        <th>Total Problems Solved</th>
+                    </tr>
+                </thead>
+                <tbody id="classTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Sample data (replace with API/database in production)
+        const studentData = [
+            { student: "Alice", class: "Class A", codingScore: 85, academicScore: 90, problemsSolved: 45, lastActivity: "2025-03-15" },
+            { student: "Bob", class: "Class A", codingScore: 78, academicScore: 82, problemsSolved: 30, lastActivity: "2025-03-20" },
+            { student: "Charlie", class: "Class B", codingScore: 92, academicScore: 88, problemsSolved: 60, lastActivity: "2025-04-01" },
+            { student: "David", class: "Class B", codingScore: 70, academicScore: 75, problemsSolved: 25, lastActivity: "2025-04-05" },
+            { student: "Emma", class: "Class A", codingScore: 88, academicScore: 85, problemsSolved: 50, lastActivity: "2025-03-28" }
+        ];
+
+        // Calculate percentages
+        studentData.forEach(s => {
+            s.codingProgress = (s.codingScore / 100) * 100;
+            s.academicProgress = (s.academicScore / 100) * 100;
+        });
+
+        // Aggregate class data
+        const classData = [
+            {
+                class: "Class A",
+                avgCodingScore: studentData.filter(s => s.class === "Class A").reduce((sum, s) => sum + s.codingScore, 0) / 3,
+                avgAcademicScore: studentData.filter(s => s.class === "Class A").reduce((sum, s) => sum + s.academicScore, 0) / 3,
+                totalProblems: studentData.filter(s => s.class === "Class A").reduce((sum, s) => sum + s.problemsSolved, 0)
+            },
+            {
+                class: "Class B",
+                avgCodingScore: studentData.filter(s => s.class === "Class B").reduce((sum, s) => sum + s.codingScore, 0) / 2,
+                avgAcademicScore: studentData.filter(s => s.class === "Class B").reduce((sum, s) => sum + s.academicScore, 0) / 2,
+                totalProblems: studentData.filter(s => s.class === "Class B").reduce((sum, s) => sum + s.problemsSolved, 0)
+            }
+        ];
+
+        // Initialize filters
+        const studentFilter = document.getElementById("studentFilter");
+        studentData.forEach(s => {
+            const option = document.createElement("option");
+            option.value = s.student;
+            option.textContent = s.student;
+            studentFilter.appendChild(option);
+        });
+
+        let selectedStudent = null;
+        let studentProgressChartInstance = null;
+        let studentScatterChartInstance = null;
+        let classProgressChartInstance = null;
+        let classPieChartInstance = null;
+
+        // Select student function
+        function selectStudent(studentName) {
+            selectedStudent = studentName;
+            document.getElementById("studentFilter").value = studentName;
+            updateDashboard();
+        }
+
+        // Tab switching
+        function showTab(tabId) {
+            selectedStudent = null;
+            document.getElementById("studentFilter").value = "All";
+            document.getElementById("studentTab").style.display = tabId === "studentTab" ? "block" : "none";
+            document.getElementById("classTab").style.display = tabId === "classTab" ? "block" : "none";
+            document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add("active");
+            updateDashboard();
+        }
+
+        // Update dashboard based on filters
+        function updateDashboard() {
+            const classFilter = document.getElementById("classFilter").value;
+            const studentFilterValue = document.getElementById("studentFilter").value;
+            let filteredData = studentData;
+
+            // Student tab logic
+            if (document.getElementById("studentTab").style.display !== "none") {
+                if (selectedStudent) {
+                    filteredData = studentData.filter(s => s.student === selectedStudent);
+                } else {
+                    if (classFilter !== "All") {
+                        filteredData = filteredData.filter(s => s.class === classFilter);
+                    }
+                    if (studentFilterValue !== "All") {
+                        filteredData = filteredData.filter(s => s.student === studentFilterValue);
+                    }
+                }
+
+                // Update metrics
+                document.getElementById("avgCodingScore").textContent = 
+                    filteredData.length ? (filteredData.reduce((sum, s) => sum + s.codingScore, 0) / filteredData.length).toFixed(1) + "%" : "0%";
+                document.getElementById("avgAcademicScore").textContent = 
+                    filteredData.length ? (filteredData.reduce((sum, s) => sum + s.academicScore, 0) / filteredData.length).toFixed(1) + "%" : "0%";
+                document.getElementById("totalProblems").textContent = 
+                    filteredData.reduce((sum, s) => sum + s.problemsSolved, 0);
+
+                // Show/hide total problems card
+                document.getElementById("totalProblemsCard").classList.toggle("hidden", !!selectedStudent);
+
+                // Destroy existing charts to prevent overlap
+                if (studentProgressChartInstance) {
+                    studentProgressChartInstance.destroy();
+                }
+                if (studentScatterChartInstance) {
+                    studentScatterChartInstance.destroy();
+                }
+
+                // Student Progress Chart
+                studentProgressChartInstance = new Chart(document.getElementById("studentProgressChart"), {
+                    type: "bar",
+                    data: {
+                        labels: filteredData.map(s => s.student),
+                        datasets: [
+                            {
+                                label: "Coding Progress",
+                                data: filteredData.map(s => s.codingProgress),
+                                backgroundColor: "#007bff"
+                            },
+                            {
+                                label: "Academic Progress",
+                                data: filteredData.map(s => s.academicProgress),
+                                backgroundColor: "#28a745"
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: "Progress (%)" } } },
+                        plugins: { title: { display: true, text: selectedStudent ? `${selectedStudent}'s Progress` : "Student Progress Comparison" } }
+                    }
+                });
+
+                // Student Scatter Chart
+                studentScatterChartInstance = new Chart(document.getElementById("studentScatterChart"), {
+                    type: "scatter",
+                    data: {
+                        datasets: filteredData.map(s => ({
+                            label: s.student,
+                            data: [{ x: s.codingScore, y: s.academicScore }],
+                            backgroundColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
+                            pointRadius: selectedStudent ? 10 : 8
+                        }))
+                    },
+                    options: {
+                        scales: {
+                            x: { title: { display: true, text: "Coding Score" } },
+                            y: { title: { display: true, text: "Academic Score" } }
+                        },
+                        plugins: { title: { display: true, text: selectedStudent ? `${selectedStudent}'s Performance` : "Coding vs Academic Performance" } }
+                    }
+                });
+
+                // Student Table
+                const studentTableHead = document.getElementById("studentTableHead");
+                const studentTable = document.getElementById("studentTable");
+                studentTableHead.innerHTML = `
+                    <tr>
+                        <th>Student</th>
+                        <th>Coding Progress</th>
+                        <th>Academic Progress</th>
+                    </tr>
+                `;
+                studentTable.innerHTML = filteredData.map(s => `
+                    <tr>
+                        <td>${selectedStudent ? s.student : `<span class="student-name" onclick="selectStudent('${s.student}')">${s.student}</span>`}</td>
+                        <td>${s.codingProgress.toFixed(1)}%</td>
+                        <td>${s.academicProgress.toFixed(1)}%</td>
+                    </tr>
+                `).join("");
+            }
+
+            // Class tab logic
+            if (document.getElementById("classTab").style.display !== "none") {
+                let filteredClassData = classFilter === "All" ? classData : classData.filter(c => c.class === classFilter);
+
+                // Update metrics
+                document.getElementById("avgClassCodingScore").textContent = 
+                    filteredClassData.length ? (filteredClassData.reduce((sum, c) => sum + c.avgCodingScore, 0) / filteredClassData.length).toFixed(1) + "%" : "0%";
+                document.getElementById("avgClassAcademicScore").textContent = 
+                    filteredClassData.length ? (filteredClassData.reduce((sum, c) => sum + c.avgAcademicScore, 0) / filteredClassData.length).toFixed(1) + "%" : "0%";
+                document.getElementById("totalClasses").textContent = filteredClassData.length;
+
+                // Destroy existing charts
+                if (classProgressChartInstance) {
+                    classProgressChartInstance.destroy();
+                }
+                if (classPieChartInstance) {
+                    classPieChartInstance.destroy();
+                }
+
+                // Class Progress Chart
+                classProgressChartInstance = new Chart(document.getElementById("classProgressChart"), {
+                    type: "bar",
+                    data: {
+                        labels: filteredClassData.map(c => c.class),
+                        datasets: [
+                            {
+                                label: "Avg Coding Score",
+                                data: filteredClassData.map(c => c.avgCodingScore),
+                                backgroundColor: "#007bff"
+                            },
+                            {
+                                label: "Avg Academic Score",
+                                data: filteredClassData.map(c => c.avgAcademicScore),
+                                backgroundColor: "#28a745"
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: "Score (%)" } } },
+                        plugins: { title: { display: true, text: "Class Performance Comparison" } }
+                    }
+                });
+
+                // Class Pie Chart
+                classPieChartInstance = new Chart(document.getElementById("classPieChart"), {
+                    type: "pie",
+                    data: {
+                        labels: filteredClassData.map(c => c.class),
+                        datasets: [{
+                            data: filteredClassData.map(c => c.totalProblems),
+                            backgroundColor: ["#007bff", "#28a745", "#dc3545"]
+                        }]
+                    },
+                    options: {
+                        plugins: { title: { display: true, text: "Distribution of Problems Solved by Class" } }
+                    }
+                });
+
+                // Class Table
+                const classTable = document.getElementById("classTable");
+                classTable.innerHTML = filteredClassData.map(c => `
+                    <tr>
+                        <td>${c.class}</td>
+                        <td>${c.avgCodingScore.toFixed(1)}%</td>
+                        <td>${c.avgAcademicScore.toFixed(1)}%</td>
+                        <td>${c.totalProblems}</td>
+                    </tr>
+                `).join("");
+            }
+        }
+
+        // Initialize dashboard
+        updateDashboard();
+
+        // Filter change listeners
+        document.getElementById("classFilter").addEventListener("change", () => {
+            selectedStudent = null;
+            document.getElementById("studentFilter").value = "All";
+            updateDashboard();
+        });
+        document.getElementById("studentFilter").addEventListener("change", () => {
+            selectedStudent = null;
+            updateDashboard();
+        });
+        document.getElementById("timePeriod").addEventListener("change", updateDashboard);
+    </script>
+</body>
+</html>

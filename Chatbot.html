@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Bridge Chatbot</title>
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #49637e, #d9e2ec);
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 600px;
+            height: 80vh;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #007bff;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .recommended-questions {
+            background: #f1f3f5;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .recommended-btn {
+            padding: 8px 12px;
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.3s;
+        }
+
+        .recommended-btn:hover {
+            background: #5a6268;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-message {
+            align-items: flex-end;
+        }
+
+        .bot-message {
+            align-items: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .user-message .message-content {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .bot-message .message-content {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn {
+            padding: 8px 15px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .option-btn:hover {
+            background: #218838;
+        }
+
+        .related-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .related-btn {
+            padding: 8px 15px;
+            background: #ff6f61;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .related-btn:hover {
+            background: #e65b50;
+        }
+
+        .chat-footer {
+            padding: 15px;
+            background: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.95em;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .chat-header {
+                font-size: 1em;
+            }
+
+            .recommended-btn {
+                font-size: 0.75em;
+                padding: 6px 10px;
+            }
+
+            .message-content {
+                max-width: 80%;
+                font-size: 0.85em;
+            }
+
+            .option-btn, .related-btn {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+
+            .options {
+                max-height: 150px;
+            }
+
+            input[type="text"], button {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Campus Bridge Chatbot</div>
+        <div class="recommended-questions" id="recommendedQuestions">
+            <!-- Recommended questions will be populated here -->
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="message bot-message">
+                <div class="message-content">Welcome to Campus Bridge! Ask me about the platform's features or try one of the suggested questions above.</div>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your question..." />
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatBody = document.getElementById('chatBody');
+        const userInput = document.getElementById('userInput');
+        const recommendedQuestions = document.getElementById('recommendedQuestions');
+
+        // Question-response mapping with 120 options (30 per module)
+        const responseMap = {
+            'lms': {
+                options: [
+                    'Course Management',
+                    'Attendance Tracking',
+                    'Assignment Submission',
+                    'Faculty Interaction',
+                    'Quiz Scheduling',
+                    'Grade Analytics',
+                    'Resource Library',
+                    'Discussion Forums',
+                    'Timetable Planner',
+                    'Progress Dashboard',
+                    'Course Feedback',
+                    'Live Lectures',
+                    'Assignment Reminders',
+                    'Course Enrollment',
+                    'Mobile Access',
+                    'Peer Collaboration',
+                    'Exam Scheduler',
+                    'Study Groups',
+                    'Lecture Recordings',
+                    'Course Search',
+                    'Academic Calendar',
+                    'Notification Settings',
+                    'Virtual Whiteboard',
+                    'Course Progress Bar',
+                    'Faculty Office Hours',
+                    'Group Chat',
+                    'Course Recommendations',
+                    'Syllabus Viewer',
+                    'Task Prioritization',
+                    'Learning Analytics'
+                ],
+                answers: {
+                    'Course Management': 'Access courses, view materials, and track schedules.',
+                    'Attendance Tracking': 'View records, faculty mark attendance on-platform.',
+                    'Assignment Submission': 'Submit assignments with deadlines and feedback.',
+                    'Faculty Interaction': 'Message or discuss with faculty via forums.',
+                    'Quiz Scheduling': 'Faculty schedule quizzes with auto-grading.',
+                    'Grade Analytics': 'View grade reports and performance trends.',
+                    'Resource Library': 'Access PDFs, videos, and academic resources.',
+                    'Discussion Forums': 'Collaborate in course-specific forums.',
+                    'Timetable Planner': 'Manage schedules with reminders.',
+                    'Progress Dashboard': 'Track milestones and tasks.',
+                    'Course Feedback': 'Submit anonymous course feedback.',
+                    'Live Lectures': 'Join virtual classes with Q&A and recordings.',
+                    'Assignment Reminders': 'Get notifications for deadlines.',
+                    'Course Enrollment': 'Enroll or drop courses easily.',
+                    'Mobile Access': 'Use LMS features via mobile app.',
+                    'Peer Collaboration': 'Work on group projects with shared tools.',
+                    'Exam Scheduler': 'View and prepare for upcoming exams.',
+                    'Study Groups': 'Join or create study groups for collaboration.',
+                    'Lecture Recordings': 'Access recorded lectures for review.',
+                    'Course Search': 'Find courses by keywords or filters.',
+                    'Academic Calendar': 'Track key academic dates and events.',
+                    'Notification Settings': 'Customize alerts for courses and tasks.',
+                    'Virtual Whiteboard': 'Use interactive whiteboards in classes.',
+                    'Course Progress Bar': 'Visualize completion status for courses.',
+                    'Faculty Office Hours': 'Book slots for faculty consultations.',
+                    'Group Chat': 'Communicate with classmates in course-specific chats.',
+                    'Course Recommendations': 'Get suggested courses based on interests.',
+                    'Syllabus Viewer': 'Access detailed course syllabi and objectives.',
+                    'Task Prioritization': 'Organize assignments and exams by priority.',
+                    'Learning Analytics': 'Analyze study habits and optimize learning.'
+                }
+            },
+            'coding': {
+                options: [
+                    'Coding Tracks',
+                    'Online Compiler',
+                    'Performance Analytics',
+                    'Collaborative Coding',
+                    'Problem-Solving Tracks',
+                    'Coding Contests',
+                    'Skill Heatmaps',
+                    'Custom Test Cases',
+                    'Code Playgrounds',
+                    'Learning Pathways',
+                    'Peer Reviews',
+                    'Language Tutorials',
+                    'Debugging Challenges',
+                    'Project Templates',
+                    'Leaderboard Rankings',
+                    'Code Sharing',
+                    'Version Control',
+                    'Code Annotations',
+                    'Practice Scheduler',
+                    'Error Explanations',
+                    'Coding Mentors',
+                    'Hackathon Prep',
+                    'API Integration',
+                    'Code Challenges',
+                    'Progress Tracker',
+                    'Code Benchmarking',
+                    'Open Source Contributions',
+                    'Code Review Requests',
+                    'Coding Webinars',
+                    'Skill Certifications'
+                ],
+                answers: {
+                    'Coding Tracks': 'Enroll in DSA, Web Dev, Python, or Java tracks.',
+                    'Online Compiler': 'Code in C, C++, Python, Java, and more.',
+                    'Performance Analytics': 'Track progress with heatmaps and badges.',
+                    'Collaborative Coding': 'Pair program in Live Group Code Rooms.',
+                    'Problem-Solving Tracks': 'Solve curated algorithm and DS problems.',
+                    'Coding Contests': 'Compete in timed coding challenges.',
+                    'Skill Heatmaps': 'Visualize coding strengths and weaknesses.',
+                    'Custom Test Cases': 'Test code with custom inputs/outputs.',
+                    'Code Playgrounds': 'Experiment in a coding sandbox.',
+                    'Learning Pathways': 'Follow tailored coding tutorials.',
+                    'Peer Reviews': 'Get feedback on code from peers.',
+                    'Language Tutorials': 'Learn Python, Java, and more.',
+                    'Debugging Challenges': 'Solve real-world debugging tasks.',
+                    'Project Templates': 'Start projects with pre-built templates.',
+                    'Leaderboard Rankings': 'Track contest and problem rankings.',
+                    'Code Sharing': 'Share solutions for feedback or showcasing.',
+                    'Version Control': 'Manage code versions like Git.',
+                    'Code Annotations': 'Add notes to explain code logic.',
+                    'Practice Scheduler': 'Plan daily coding practice sessions.',
+                    'Error Explanations': 'Understand error messages clearly.',
+                    'Coding Mentors': 'Connect with mentors for guidance.',
+                    'Hackathon Prep': 'Prepare for hackathons with resources.',
+                    'API Integration': 'Learn to integrate APIs in projects.',
+                    'Code Challenges': 'Tackle daily coding problems.',
+                    'Progress Tracker': 'Monitor coding milestones and goals.',
+                    'Code Benchmarking': 'Compare code performance to standards.',
+                    'Open Source Contributions': 'Contribute to open-source projects.',
+                    'Code Review Requests': 'Request expert reviews for your code.',
+                    'Coding Webinars': 'Attend live coding sessions with experts.',
+                    'Skill Certifications': 'Earn certifications for coding skills.'
+                }
+            },
+            'ai': {
+                options: [
+                    'Code Hints',
+                    'Smart Code Review',
+                    'Job Match Recommender',
+                    'Debugging Assistant',
+                    'Code Optimization',
+                    'Portfolio Analysis',
+                    'Interview Prep',
+                    'Code Explanation',
+                    'Algorithm Suggestions',
+                    'Code Refactoring',
+                    'Skill Gap Analysis',
+                    'Resume Builder',
+                    'Mock Interviews',
+                    'Code Snippets Library',
+                    'Career Path Guidance',
+                    'Auto Code Formatting',
+                    'Code Complexity Analysis',
+                    'Project Recommendations',
+                    'Tech News Updates',
+                    'Skill Benchmarking',
+                    'Code Documentation',
+                    'Behavioral Interview Tips',
+                    'Code Security Check',
+                    'Learning Pace Tracker',
+                    'AI Tutor Sessions',
+                    'Code Performance Insights',
+                    'Personalized Learning Plans',
+                    'Industry Trend Analysis',
+                    'Code Collaboration Tips',
+                    'AI Feedback Loop'
+                ],
+                answers: {
+                    'Code Hints': 'Get real-time coding suggestions.',
+                    'Smart Code Review': 'AI feedback on code quality.',
+                    'Job Match Recommender': 'Match skills to job descriptions.',
+                    'Debugging Assistant': 'Fix logical errors instantly.',
+                    'Code Optimization': 'Improve code efficiency.',
+                    'Portfolio Analysis': 'Enhance coding project portfolios.',
+                    'Interview Prep': 'Practice coding interview questions.',
+                    'Code Explanation': 'Simplify complex code.',
+                    'Algorithm Suggestions': 'Get algorithms for problems.',
+                    'Code Refactoring': 'Restructure code for readability.',
+                    'Skill Gap Analysis': 'Identify and fill skill gaps.',
+                    'Resume Builder': 'Create tech resumes with AI help.',
+                    'Mock Interviews': 'Simulate technical interviews.',
+                    'Code Snippets Library': 'Access reusable code snippets.',
+                    'Career Path Guidance': 'Plan tech career paths.',
+                    'Auto Code Formatting': 'Format code to standards.',
+                    'Code Complexity Analysis': 'Evaluate code efficiency.',
+                    'Project Recommendations': 'Suggest projects to build skills.',
+                    'Tech News Updates': 'Stay updated on tech trends.',
+                    'Skill Benchmarking': 'Compare skills to industry standards.',
+                    'Code Documentation': 'Generate code documentation.',
+                    'Behavioral Interview Tips': 'Prepare for non-technical interviews.',
+                    'Code Security Check': 'Identify code vulnerabilities.',
+                    'Learning Pace Tracker': 'Monitor learning progress.',
+                    'AI Tutor Sessions': 'Get personalized coding tutoring.',
+                    'Code Performance Insights': 'Analyze code runtime and bottlenecks.',
+                    'Personalized Learning Plans': 'Get tailored plans to master skills.',
+                    'Industry Trend Analysis': 'Learn about emerging tech demands.',
+                    'Code Collaboration Tips': 'Improve teamwork on coding projects.',
+                    'AI Feedback Loop': 'Iterative AI feedback to refine skills.'
+                }
+            },
+            'admin': {
+                options: [
+                    'Skill Metrics',
+                    'Coding Leaderboard',
+                    'Placement Readiness',
+                    'Mock Tests',
+                    'Performance Reports',
+                    'Contest Scheduling',
+                    'Eligibility Tracking',
+                    'Batch Analytics',
+                    'Faculty Oversight',
+                    'Placement Drives',
+                    'Certification Tracking',
+                    'Alumni Connect',
+                    'Student Profiles',
+                    'Course Audit',
+                    'Event Management',
+                    'Feedback Analytics',
+                    'Resource Allocation',
+                    'Attendance Reports',
+                    'Budget Tracking',
+                    'Compliance Monitoring',
+                    'Parent Portal',
+                    'Survey Tools',
+                    'Campus Analytics',
+                    'Faculty Training',
+                    'Security Dashboard',
+                    'Student Support Tickets',
+                    'Course Approval Workflow',
+                    'Data Backup System',
+                    'Platform Usage Stats',
+                    'Custom Reports'
+                ],
+                answers: {
+                    'Skill Metrics': 'Assess cohort skill performance.',
+                    'Coding Leaderboard': 'Track top coding performers.',
+                    'Placement Readiness': 'Evaluate student placement prep.',
+                    'Mock Tests': 'Simulate hiring scenarios.',
+                    'Performance Reports': 'Export progress reports.',
+                    'Contest Scheduling': 'Organize coding contests.',
+                    'Eligibility Tracking': 'Monitor placement eligibility.',
+                    'Batch Analytics': 'Analyze batch performance trends.',
+                    'Faculty Oversight': 'Track faculty engagement.',
+                    'Placement Drives': 'Coordinate campus recruitment.',
+                    'Certification Tracking': 'Validate student certifications.',
+                    'Alumni Connect': 'Network with alumni for mentorship.',
+                    'Student Profiles': 'View academic and coding records.',
+                    'Course Audit': 'Review course effectiveness.',
+                    'Event Management': 'Plan hackathons and workshops.',
+                    'Feedback Analytics': 'Analyze feedback for improvements.',
+                    'Resource Allocation': 'Manage classroom and lab resources.',
+                    'Attendance Reports': 'Generate detailed attendance data.',
+                    'Budget Tracking': 'Monitor academic program budgets.',
+                    'Compliance Monitoring': 'Ensure regulatory compliance.',
+                    'Parent Portal': 'Share student progress with parents.',
+                    'Survey Tools': 'Collect stakeholder feedback.',
+                    'Campus Analytics': 'Track overall campus performance.',
+                    'Faculty Training': 'Organize faculty development programs.',
+                    'Security Dashboard': 'Monitor platform security metrics.',
+                    'Student Support Tickets': 'Manage student queries and issues.',
+                    'Course Approval Workflow': 'Streamline course approval processes.',
+                    'Data Backup System': 'Ensure data safety with backups.',
+                    'Platform Usage Stats': 'Track user activity and engagement.',
+                    'Custom Reports': 'Generate tailored reports for stakeholders.'
+                }
+            }
+        };
+
+        // 10 Recommended questions at the top
+        const recommended = [
+            'What are the LMS features?',
+            'How does the coding platform work?',
+            'What AI tools are available?',
+            'What can the admin panel do?',
+            'How do I enroll in courses?',
+            'Can I practice coding daily?',
+            'Are there AI mock interviews?',
+            'How do I track my progress?',
+            'What’s the placement readiness tool?',
+            'Can I join study groups?'
+        ];
+
+        // Related questions to display after answers (3 per module)
+        const relatedQuestions = {
+            'lms': [
+                'How do I chat with classmates?',
+                'Can I get course recommendations?',
+                'Where’s the course syllabus?',
+                'How do I prioritize tasks?',
+                'Can I analyze my learning?',
+                'How do I book faculty office hours?',
+                'Are there virtual whiteboards?',
+                'Can I access lectures on mobile?'
+            ],
+            'coding': [
+                'Can I benchmark my code?',
+                'How do I contribute to open source?',
+                'Are there coding webinars?',
+                'Can I earn coding certifications?',
+                'How do I prepare for hackathons?',
+                'Can I request code reviews?',
+                'Are there daily code challenges?',
+                'Can I annotate my code?'
+            ],
+            'ai': [
+                'Can AI analyze code performance?',
+                'Are there personalized learning plans?',
+                'What’s trending in tech?',
+                'How do I collaborate on code?',
+                'Does AI give iterative feedback?',
+                'Can AI check code security?',
+                'Are there AI tutor sessions?',
+                'Can AI document my code?'
+            ],
+            'admin': [
+                'How do I handle student queries?',
+                'Is there a course approval process?',
+                'Are data backups available?',
+                'Can I track platform usage?',
+                'How do I create custom reports?',
+                'Is there a parent portal?',
+                'Can I train faculty?',
+                'How do I manage events?'
+            ]
+        };
+
+        // Populate recommended questions at the top
+        function loadRecommendedQuestions() {
+            recommended.forEach(question => {
+                const btn = document.createElement('button');
+                btn.className = 'recommended-btn';
+                btn.textContent = question;
+                btn.onclick = () => {
+                    userInput.value = question;
+                    sendMessage();
+                };
+                recommendedQuestions.appendChild(btn);
+            });
+        }
+
+        // Load recommended questions on page load
+        loadRecommendedQuestions();
+
+        function sendMessage() {
+            const question = userInput.value.trim().toLowerCase();
+            if (!question) return;
+
+            // Display user message
+            appendMessage('user', question);
+            userInput.value = '';
+
+            // Simulate bot processing
+            setTimeout(() => {
+                let responseKey = null;
+                if (question.includes('lms') || question.includes('course') || question.includes('academic') || question.includes('quiz') || question.includes('grade') || question.includes('timetable') || question.includes('feedback') || question.includes('lecture') || question.includes('reminder') || question.includes('enroll') || question.includes('exam') || question.includes('study') || question.includes('calendar') || question.includes('whiteboard') || question.includes('syllabus') || question.includes('chat') || question.includes('task')) {
+                    responseKey = 'lms';
+                } else if (question.includes('coding') || question.includes('compiler') || question.includes('track') || question.includes('contest') || question.includes('problem') || question.includes('tutorial') || question.includes('playground') || question.includes('debug') || question.includes('project') || question.includes('share') || question.includes('mentor') || question.includes('hackathon') || question.includes('api') || question.includes('version') || question.includes('webinar') || question.includes('certification') || question.includes('open source')) {
+                    responseKey = 'coding';
+                } else if (question.includes('ai') || question.includes('assistant') || question.includes('job') || question.includes('code review') || question.includes('interview') || question.includes('resume') || question.includes('algorithm') || question.includes('mock') || question.includes('snippet') || question.includes('career') || question.includes('format') || question.includes('complexity') || question.includes('security') || question.includes('tutor') || question.includes('trend') || question.includes('personalized') || question.includes('collaboration')) {
+                    responseKey = 'ai';
+                } else if (question.includes('admin') || question.includes('placement') || question.includes('leaderboard') || question.includes('report') || question.includes('batch') || question.includes('alumni') || question.includes('certification') || question.includes('profile') || question.includes('audit') || question.includes('event') || question.includes('resource') || question.includes('budget') || question.includes('compliance') || question.includes('parent') || question.includes('ticket') || question.includes('approval') || question.includes('backup')) {
+                    responseKey = 'admin';
+                } else {
+                    appendMessage('bot', 'Sorry, I didn’t understand that. Try asking about LMS, coding, AI, or admin features, or pick a suggested question!');
+                    return;
+                }
+
+                // Display options
+                const options = responseMap[responseKey].options;
+                appendOptions(options, responseKey);
+            }, 500);
+        }
+
+        function appendMessage(sender, content) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function appendOptions(options, responseKey) {
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'message bot-message';
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'options';
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.onclick = () => handleOptionClick(option, responseKey, optionsDiv);
+                optionsContainer.appendChild(btn);
+            });
+            optionsDiv.appendChild(optionsContainer);
+            chatBody.appendChild(optionsDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function appendRelatedQuestions(responseKey) {
+            const questions = relatedQuestions[responseKey];
+            // Randomly select 3 questions
+            const shuffled = questions.sort(() => 0.5 - Math.random()).slice(0, 3);
+            const relatedDiv = document.createElement('div');
+            relatedDiv.className = 'message bot-message';
+            const relatedContainer = document.createElement('div');
+            relatedContainer.className = 'related-questions';
+            shuffled.forEach(question => {
+                const btn = document.createElement('button');
+                btn.className = 'related-btn';
+                btn.textContent = question;
+                btn.onclick = () => {
+                    userInput.value = question;
+                    sendMessage();
+                };
+                relatedContainer.appendChild(btn);
+            });
+            relatedDiv.appendChild(relatedContainer);
+            chatBody.appendChild(relatedDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function handleOptionClick(option, responseKey, optionsDiv) {
+            // Remove options
+            optionsDiv.remove();
+
+            // Display selected option and answer
+            appendMessage('user', option);
+            setTimeout(() => {
+                const answer = responseMap[responseKey].answers[option];
+                appendMessage('bot', answer);
+                // Append related questions after answer
+                appendRelatedQuestions(responseKey);
+            }, 500);
+        }
+
+        // Handle Enter key press
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>

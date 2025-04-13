@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white text-center py-6">
+        <h1 class="text-3xl font-bold">Faculty Panel</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6 flex flex-col md:flex-row gap-6">
+        <!-- Assignment Section -->
+        <section class="bg-white p-6 rounded-lg shadow-md flex-1">
+            <h2 class="text-2xl font-semibold mb-4">Manage Assignments</h2>
+            <form id="assignmentForm" class="mb-4">
+                <div class="mb-4">
+                    <label for="assignmentTitle" class="block text-sm font-medium text-gray-700">Assignment Title</label>
+                    <input type="text" id="assignmentTitle" class="mt-1 p-2 w-full border rounded-md" required>
+                </div>
+                <div class="mb-4">
+                    <label for="assignmentDesc" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="assignmentDesc" class="mt-1 p-2 w-full border rounded-md" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add Assignment</button>
+            </form>
+            <!-- Div to display added assignments -->
+            <div id="assignmentDisplay" class="space-y-4 mt-4"></div>
+        </section>
+
+        <!-- File Upload Section -->
+        <section class="bg-white p-6 rounded-lg shadow-md flex-1">
+            <h2 class="text-2xl font-semibold mb-4">Manage Files</h2>
+            <form id="fileForm" class="mb-4">
+                <div class="mb-4">
+                    <label for="fileInput" class="block text-sm font-medium text-gray-700">Upload File (PDF, Video, etc.)</label>
+                    <input type="file" id="fileInput" class="mt-1 p-2 w-full border rounded-md" accept=".pdf,video/*" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Upload File</button>
+            </form>
+            <!-- Div to display uploaded files -->
+            <div id="fileDisplay" class="space-y-4 mt-4"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

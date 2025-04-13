@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Compiler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/htmlmixed/htmlmixed.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            height: 80%;
+            width: 100%;
+        }
+
+        #top {
+            flex: 3;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #bottom {
+            flex: 1;
+            background-color: #e0e0e0;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        #editor-container {
+            flex: 1;
+            border: 1px solid #ccc;
+        }
+
+        #language-select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #run-btn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #run-btn:hover {
+            background-color: #218838;
+        }
+
+        #output {
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 300%;
+            overflow: auto;
+            
+        }
+
+        @media (max-width: 768px) {
+            #top, #bottom {
+                padding: 10px;
+            }
+
+            #language-select, #run-btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="top">
+            <select id="language-select">
+                <option value="html">HTML</option>
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="c">C</option>
+            </select>
+            <div id="editor-container"></div>
+            <button id="run-btn">Run</button>
+        </div>
+        <div id="bottom">
+            <div id="output">Output will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        const languageSelect = document.getElementById('language-select');
+        const runBtn = document.getElementById('run-btn');
+        const outputDiv = document.getElementById('output');
+        let editor;
+
+        // Example codes and their outputs
+        const codeSnippets = {
+            html: {
+                code: `<h1>Hello, World!</h1>\n<p>This is an HTML example.</p>`,
+                output: null // Rendered directly
+            },
+            javascript: {
+                code: `console.log("Hello, World!");\nlet x = 5;\nlet y = 10;\nconsole.log("Sum:", x + y);`,
+                output: null // Executed directly
+            },
+            python: {
+                code: `print("Hello, World!")\nx = 5\ny = 10\nprint("Sum:", x + y)`,
+                output: "Hello, World!\nSum: 15"
+            },
+            java: {
+                code: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n        int x = 5, y = 10;\n        System.out.println("Sum: " + (x + y));\n    }\n}`,
+                output: "Hello, World!\nSum: 15"
+            },
+            c: {
+                code: `#include <stdio.h>\nint main() {\n    printf("Hello, World!\\n");\n    int x = 5, y = 10;\n    printf("Sum: %d\\n", x + y);\n    return 0;\n}`,
+                output: "Hello, World!\nSum: 15"
+            }
+        };
+
+        // Initialize CodeMirror editor
+        function initEditor(mode, value) {
+            if (editor) {
+                editor.toTextArea(); // Clear previous editor
+            }
+            editor = CodeMirror(document.getElementById('editor-container'), {
+                value: value,
+                mode: mode,
+                lineNumbers: true,
+                theme: 'default',
+                indentUnit: 4,
+                tabSize: 4
+            });
+        }
+
+        // Set editor mode and code based on language
+        function setEditorMode(language) {
+            const modes = {
+                html: 'htmlmixed',
+                javascript: 'javascript',
+                python: 'python',
+                java: 'text/x-java',
+                c: 'text/x-csrc'
+            };
+            // Load only the selected language's code
+            initEditor(modes[language], codeSnippets[language].code);
+        }
+
+        // Run code based on language
+        function runCode() {
+            const language = languageSelect.value;
+            const code = editor.getValue();
+            outputDiv.innerHTML = 'Running...';
+
+            if (language === 'html') {
+                outputDiv.innerHTML = code;
+            } else if (language === 'javascript') {
+                try {
+                    const consoleLog = [];
+                    console.log = (msg) => consoleLog.push(msg);
+                    eval(code);
+                    outputDiv.textContent = consoleLog.join('\n') || 'No output';
+                } catch (e) {
+                    outputDiv.textContent = 'Error: ' + e.message;
+                }
+            } else {
+                // Simulate execution for Python, Java, C
+                if (code === codeSnippets[language].code) {
+                    outputDiv.textContent = codeSnippets[language].output;
+                } else {
+                    outputDiv.textContent = `Simulated output for ${language}. Edit the example code to see results.`;
+                }
+            }
+        }
+
+        // Initialize with HTML
+        setEditorMode('html');
+
+        // Change language and update editor
+        languageSelect.addEventListener('change', () => {
+            const selectedLanguage = languageSelect.value;
+            setEditorMode(selectedLanguage);
+        });
+
+        // Run button
+        runBtn.addEventListener('click', runCode);
+    </script>
+</body>
+</html>

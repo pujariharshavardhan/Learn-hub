@@ -1,0 +1,45 @@
+/* Additional custom styles to complement Tailwind */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Style for display divs */
+#assignmentDisplay, #fileDisplay {
+    display: flex;
+    flex-direction: column;
+}
+
+.display-item {
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transition: background-color 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+}

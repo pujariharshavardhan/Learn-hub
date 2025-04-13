@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub</title>
+    <link rel="stylesheet" href="./new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./Logo.jpg">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="./Logo.jpg" alt="Logo">
+                <span>LearnHub</span>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="Quizzess.html">Quiz</a></li>
+                <li class="dropdown">
+                    <a href="#details">Details</a>
+                    <div class="dropdown-content">
+                        <a href="resumebuilding.html"><img src="https://img.icons8.com/ios/24/000000/attendance-mark.png" alt="Attendance"> Resume Bild</a>
+                        <a href="assesments.html"><img src="https://img.icons8.com/ios/24/000000/task.png" alt="Assignments"> Assessments</a>
+                        <a href="./report.html"><img src="https://img.icons8.com/ios/24/000000/report-card.png" alt="Reports"> Reports</a>
+                    </div>
+                </li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#courses"><button class="get-started-btn" onclick="scrollToSection('carousel')">Get Started</button></a></li>
+                <li class="dropdown profile">
+                    <img src="https://img.icons8.com/ios-filled/24/ffffff/user.png" alt="Profile" class="profile-icon" style="color: #000;">
+                    <div class="dropdown-content">
+                        <a href="./profile.html"><img src="https://img.icons8.com/ios/24/000000/user-male-circle.png" alt="Profile"> Profile</a>
+                        <a href="Settings.html"><img src="https://img.icons8.com/ios/24/000000/settings.png" alt="Settings"> Settings</a>
+                        <a href="Chatbot.html"><img width="25" height="25" src="https://img.icons8.com/ios/50/help--v1.png" alt="Help"/> Help</a>
+                        <a href="index.html"><img src="https://img.icons8.com/ios/24/000000/logout-rounded-left.png" alt="Logout"> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Welcome to LearnHub</h1>
+        <p>Explore, learn, and master your skills with us!</p>
+    </section>
+
+    <section id="carousel" class="carousel">
+        <button class="arrow left-arrow" onclick="prevSlide()">❮</button>
+        <div class="carousel-content">
+            <div class="slide active">
+                <h2>Learn Web Development</h2>
+                <p>Master HTML, CSS, and JavaScript.</p>
+            </div>
+            <div class="slide">
+                <h2>Explore Python</h2>
+                <p>Build powerful applications with ease.</p>
+            </div>
+            <div class="slide">
+                <h2>Dive into Java</h2>
+                <p>Create robust, scalable solutions.</p>
+            </div>
+        </div>
+        <button class="arrow right-arrow" onclick="nextSlide()">❯</button>
+        <div class="carousel-buttons">
+            <button class="get-started-btn" onclick="scrollToSection('courses')">Get Started</button>
+            <button class="recommended-btn">Recommended</button>
+        </div>
+    </section>
+
+    <section id="about" class="content">
+        <h2>About Us</h2>
+        <div class="about-text">
+            <p>LearnHub is your ultimate destination for mastering programming and technology skills. We provide high-quality, interactive courses designed to empower learners worldwide. Our expert instructors bring years of experience to guide you every step of the way.</p>
+            <p>Whether you're a beginner or an advanced learner, our platform offers personalized learning paths to suit your needs. Join our community of passionate learners and unlock your potential with LearnHub today.</p>
+        </div>
+        <button class="read-more-btn">Read More</button>
+        <button class="read-less-btn" style="display: none;">Read Less</button>
+    </section>
+
+    <section id="courses" class="courses">
+        <h2>Our Courses</h2>
+        <div class="course-container">
+            <div class="course-card">
+                <img src="https://img.icons8.com/color/96/000000/html-5.png" alt="Web" class="course-image">
+                <h3>Web Development</h3>
+                <div class="course-info">
+                    <ul>
+                        <li>HTML & CSS</li>
+                        <li>JavaScript</li>
+                        <li>React & Node.js</li>
+                        <li>Responsive Design</li>
+                    </ul>
+                    <a href="./ReadmoreHTML.html" class="read-more">Read More</a>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://img.icons8.com/color/96/000000/java-coffee-cup-logo.png" alt="Java" class="course-image">
+                <h3>Java</h3>
+                <div class="course-info">
+                    <ul>
+                        <li>OOP Concepts</li>
+                        <li>Java Collections</li>
+                        <li>Spring Framework</li>
+                        <li>Multithreading</li>
+                    </ul>
+                    <a href="javacourse.html" class="read-more">Read More</a>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://img.icons8.com/color/96/000000/python.png" alt="Python" class="course-image">
+                <h3>Python</h3>
+                <div class="course-info">
+                    <ul>
+                        <li>Python Basics</li>
+                        <li>Data Analysis</li>
+                        <li>Django & Flask</li>
+                        <li>Machine Learning</li>
+                    </ul>
+                    <a href="pythoncourse.html" class="read-more">Read More</a>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="./cimage.png" alt="C" class="course-image">
+                <h3>C</h3>
+                <div class="course-info">
+                    <ul>
+                        <li>Pointers</li>
+                        <li>Memory Management</li>
+                        <li>Data Structures</li>
+                        <li>File I/O</li>
+                    </ul>
+                    <a href="ccourse.html" class="read-more">Read More</a>
+                </div>
+            </div>
+            <div class="course-card">
+                <img src="https://img.icons8.com/ios-filled/96/000000/c-plus-plus-logo.png" alt="C++" class="course-image">
+                <h3>C++</h3>
+                <div class="course-info">
+                    <ul>
+                        <li>Classes & Objects</li>
+                        <li>STL</li>
+                        <li>Templates</li>
+                        <li>Exception Handling</li>
+                    </ul>
+                    <a href="c++course.html" class="read-more">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="content">
+        <h2>Contact Us</h2>
+        <p>Reach out to us at <a href="mailto:Responsive-Rebals@gmail.com">Responsive-Rebals@gmail.com</a> or call us at 95-111-33-14</p>
+    </section>
+
+    <footer>
+        <p>© 2025 LearnHub. All rights reserved.</p>
+    </footer>
+
+    <script src="./NEW.js"></script>
+</body>
+</html>

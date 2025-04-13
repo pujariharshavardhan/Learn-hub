@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .compiler-link {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .compiler-link:hover {
+            background-color: #0056b3;
+        }
+        .subject-options, .assessment-results {
+            margin-top: 20px;
+            display: none;
+        }
+        .assessment-card {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+        .assessment-card a {
+            text-decoration: none;
+            color: #007BFF;
+            pointer-events: auto;
+        }
+        .assessment-card a:hover {
+            text-decoration: underline;
+        }
+        .result-block {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .red {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .header {
+            background-color: #800080;
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: xx-large;
+            color: #e9ecef;
+        }
+        .header p {
+            font-size: 1em;
+            margin: 5px 0 0;
+        }
+        .activity-section {
+            margin-bottom: 20px;
+        }
+        .activity-section h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .card {
+            background-color: #F5F5F5;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .card h3 {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+        .card p {
+            font-size: 1.5em;
+            font-weight: normal;
+            margin: 0;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1>Assessments</h1>
+        <p>Assessment is the systematic basis for making inferences about the learning and development of students. Let's redefine your</p>
+    </header>
+    <section class="activity-section">
+        <h2>Assessment Activity</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Tests Assigned</h3>
+                <p>43</p>
+            </div>
+            <div class="card">
+                <h3>Tests Completed</h3>
+                <p>4</p>
+            </div>
+            <div class="card">
+                <h3>Questions Attempted</h3>
+                <p>5</p>
+            </div>
+            <div class="card">
+                <h3>Total Time Spent</h3>
+                <p>50 mins</p>
+            </div>
+            <div class="card">
+                <a href="compiler .html"><h3>COMPILER</h3></a>
+               
+            </div>
+        </div>
+    </section>
+
+    <button onclick="showSubjects()">All Assessments</button>
+    <button onclick="showAttempted()">Attempted Assessments</button>
+    <button onclick="showUnattempted()">Unattempted Assessments</button>
+   
+
+    <div class="subject-options">
+        <h2>Select a Subject:</h2>
+        <button onclick="loadQuestions('Web Development')">Web Development</button>
+        <button onclick="loadQuestions('Python')">Python</button>
+        <button onclick="loadQuestions('Java')">Java</button>
+        <button onclick="loadQuestions('C')">C</button>
+    </div>
+
+    <div class="assessment-results" id="assessmentResults">
+        <h2>Assessment Questions:</h2>
+    </div>
+</div>
+
+<script>
+    const questions = {
+        'Web Development': ['What is HTML?', 'What is CSS?', 'What is JavaScript?', 'Explain the box model.', 'What are media queries?', 'What is the DOM?', 'What is responsive design?', 'What is AJAX?', 'What are web frameworks?', 'Explain the role of HTTP.'],
+        'Python': ['What is a list?', 'What is a tuple?', 'Explain decorators.', 'What is a class?', 'What are modules?', 'What is list comprehension?', 'What are lambda functions?', 'Explain exception handling.', 'What is the GIL?', 'What are Python decorators?'],
+        'Java': ['What is a JVM?', 'Explain polymorphism.', 'What is an interface?', 'What are Java annotations?', 'What is the difference between abstract classes and interfaces?', 'What are Java streams?', 'Explain the concept of inheritance.', 'What is a HashMap?', 'What is garbage collection in Java?', 'What are lambda expressions?'],
+        'C': ['What is a pointer?', 'What is dynamic memory allocation?', 'Explain data structures.', 'What are structures in C?', 'What is the difference between malloc and calloc?', 'What are function pointers?', 'Explain recursion.', 'What is a preprocessor?', 'What are header files?', 'What is a segmentation fault?']
+    };
+
+    let attempted = [];
+    const totalQuestions = 40;
+
+    function showSubjects() {
+        document.querySelector('.subject-options').style.display = 'block';
+        document.querySelector('.assessment-results').style.display = 'none';
+    }
+
+    function loadQuestions(subject) {
+        const resultsDiv = document.getElementById('assessmentResults');
+        resultsDiv.innerHTML = '<h2>Assessment Questions:</h2>'; // Reset with header
+
+        let selectedQuestions = questions[subject].slice(0, 10);
+        selectedQuestions.forEach(question => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'assessment-card';
+            questionCard.innerHTML = `
+                <div><a href="compiler.html">${question}</a></div>
+                <div class="result-block">Marks Gained: 10</div>
+            `;
+            resultsDiv.appendChild(questionCard);
+            console.log(`Created link for question: ${question}, href: compiler.html`);
+        });
+
+        document.querySelector('.subject-options').style.display = 'none';
+        resultsDiv.style.display = 'block';
+    }
+
+    function showAttempted() {
+        const resultsDiv = document.getElementById('assessmentResults');
+        resultsDiv.innerHTML = '<h2>Assessment Questions:</h2>'; // Reset with header
+
+        let attemptedQuestions = [];
+        attempted = []; // Reset attempted to avoid duplicates
+        while (attemptedQuestions.length < 5 && questions['Web Development'].length > 0) {
+            let randomIndex = Math.floor(Math.random() * questions['Web Development'].length);
+            if (!attempted.includes(randomIndex)) {
+                attempted.push(randomIndex);
+                attemptedQuestions.push(questions['Web Development'][randomIndex]);
+            }
+        }
+
+        attemptedQuestions.forEach(question => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'assessment-card';
+            questionCard.innerHTML = `
+                <div><a href="compiler.html">${question}</a></div>
+                <div class="result-block">Marks Gained: 10</div>
+            `;
+            resultsDiv.appendChild(questionCard);
+            console.log(`Created link for attempted question: ${question}, href: compiler.html`);
+        });
+
+        document.querySelector('.subject-options').style.display = 'none';
+        resultsDiv.style.display = 'block';
+    }
+
+    function showUnattempted() {
+        const resultsDiv = document.getElementById('assessmentResults');
+        resultsDiv.innerHTML = '<h2>Assessment Questions:</h2>'; // Reset with header
+
+        let remainingQuestions = totalQuestions - attempted.length;
+        for (let i = 0; i < remainingQuestions; i++) {
+            const questionText = `Problem Statement ${i + 1}`;
+            const questionCard = document.createElement('div');
+            questionCard.className = 'assessment-card red';
+            questionCard.innerHTML = `
+                <div><a href="compiler.html">${questionText}</a></div>
+                <div class="result-block">Marks Gained: 0</div>
+            `;
+            resultsDiv.appendChild(questionCard);
+            console.log(`Created link for unattempted question: ${questionText}, href: compiler.html`);
+        }
+
+        document.querySelector('.subject-options').style.display = 'none';
+        resultsDiv.style.display = 'block';
+    }
+
+    // Debug link clicks
+    document.addEventListener('click', function(event) {
+        if (event.target.tagName === 'A') {
+            console.log(`Link clicked: ${event.target.href}, Text: ${event.target.textContent}`);
+        }
+    });
+</script>
+</body>
+</html>
