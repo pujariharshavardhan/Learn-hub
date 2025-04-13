@@ -1,6 +1,8 @@
 # Learn-hub
 ## Description
 LearnHub is a fully dynamic educational platform designed to help students explore, learn, and master their skills. The homepage serves as the main entry point, dynamically rendering content such as navigation links (Home, About Us, Quiz, Details, Contact Us) and a "Get Started" button. The platform leverages server-side processing to deliver real-time data and user-specific features.
+
+We started by thinking about what we wanted the website to do. We decided it should help students and teachers with learning and managing tasks. Our first step was to plan the different parts, like a dashboard to show student progress, a place for teachers to add assignments, a quiz game, a chatbot to answer questions, a learning area with tutorials, and special pages for students and admins to sign up or log in.
 ![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/a4dedb97581e59300c546dbc203c805fb5b8dc25/images/1.png)
 
 
