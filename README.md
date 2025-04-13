@@ -10,4 +10,4 @@ This project is an educational platform called [Lear-hub], designed to help stud
 - **Faculty Panel**: Allows faculty to manage courses, assignments, and student data.
 - **Admin Panel**: Offers administrative controls to oversee the platform, manage users, and monitor activities.
 - 
-![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/a4dedb97581e59300c546dbc203c805fb5b8dc25/images/1.png)
+![image alt](https://github.com/pujariharshavardhan/Learn-hub/blob/985fa524790642554371185e81f886385e862a58/images/2.png)
